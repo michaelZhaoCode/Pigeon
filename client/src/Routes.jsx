@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "pages/Home";
+import HomePage from "pages/HomePage";
 import NotFound from "pages/NotFound";
 const MyProfile = React.lazy(() => import("pages/MyProfile"));
 const DirectMessage = React.lazy(() => import("pages/DirectMessage"));
 const Messages = React.lazy(() => import("pages/Messages"));
-const Home1 = React.lazy(() => import("pages/Home1"));
+const Home = React.lazy(() => import("pages/Home"));
 const Signup = React.lazy(() => import("pages/Signup"));
 const Login = React.lazy(() => import("pages/Login"));
 const ProjectRoutes = () => {
@@ -16,11 +16,11 @@ const ProjectRoutes = () => {
           <Route path="/" element={<Login />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/home1" element={<Home1 />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/directmessage" element={<DirectMessage />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/dhiwise-dashboard" element={<Home />} />
+          <Route path="/dash" element={<HomePage />} />
         </Routes>
       </Router>
     </React.Suspense>

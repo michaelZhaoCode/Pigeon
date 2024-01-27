@@ -7,7 +7,7 @@ import Sidebar1 from "components/Sidebar1";
 
 // import { CloseSVG } from "../../assets/images";
 
-const Home1Page = () => {
+const HomePage = () => {
   const navigate = useNavigate();
 
   const [frameonevalue, setFrameonevalue] = React.useState("");
@@ -24,4 +24,4 @@ const Home1Page = () => {
   );
 };
 
-export default Home1Page;
+export default HomePage;
