@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "pages/HomePage";
+import Dashboard from "pages/Dashboard";
 import NotFound from "pages/NotFound";
 const MyProfile = React.lazy(() => import("pages/MyProfile"));
 const DirectMessage = React.lazy(() => import("pages/DirectMessage"));
@@ -20,7 +20,7 @@ const ProjectRoutes = () => {
           <Route path="/messages" element={<Messages />} />
           <Route path="/directmessage" element={<DirectMessage />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/dash" element={<HomePage />} />
+          <Route path="/dash" element={<Dashboard />} />
         </Routes>
       </Router>
     </React.Suspense>

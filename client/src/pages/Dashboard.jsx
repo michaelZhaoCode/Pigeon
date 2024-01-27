@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const Home = () => {
+const Dashboard = () => {
   return (
     <div className="dhiwise-navigation">
-      <h1>Homepage</h1>
+      <h1>Dashboard</h1>
       <ul>
         <li>
           <Link to="/">Login</Link>
@@ -27,4 +27,4 @@ const Home = () => {
     </div>
   );
 };
-export default Home;
+export default Dashboard;

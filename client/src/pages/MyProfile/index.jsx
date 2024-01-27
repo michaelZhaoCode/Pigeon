@@ -1,17 +1,9 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import { Button, Img, Input, List, Text } from "components";
-import Sidebar1 from "components/Sidebar1";
 
-import { CloseSVG } from "../../assets/images";
-
-const MyProfilePage = () => {
-  const navigate = useNavigate();
-
-  const [frameonevalue, setFrameonevalue] = React.useState("");
-
+const MyProfilePage = ({ isVisible }) => {
+  if (!isVisible) return null;
   return (
     <>
       <div className="flex md:flex-1 sm:flex-col flex-row font-sfprodisplay gap-2.5 items-center justify-between md:px-5 w-[27%] md:w-full">
