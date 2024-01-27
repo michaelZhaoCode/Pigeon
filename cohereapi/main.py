@@ -1,7 +1,7 @@
 import cohere
 co = cohere.Client('yTir03SIfA0ft4J5G3pRIOBYKDOvyJY0OcAFrrRv')
 
-# define the function of paraphrasing text in a speaking way in different eras
+# define the function of rephrasing text in a speaking style in different eras(old English)
 def paraphrase(text, style):
     """
     Style is an integer between 0 and 4
@@ -30,12 +30,12 @@ def paraphrase(text, style):
     }
 
     response = co.generate(
-    prompt=f'Replace the following text in {x[style]}: \n {user_input}',
+    prompt=f'Replace the following text in the speaking style in {x[style]}: \n {text}',
     )
     print(response)
 
 # Call the function
-user_input = "A king, historically a central figure in monarchies, symbolizes authority, leadership, and governance. Clad in regal attire, a king typically inherits the throne or ascends through conquest, wielding both political and symbolic power. Tasked with the welfare of the realm, a king's reign is marked by decisions that shape the course of history. Whether remembered for benevolent rule or tyrannical oppression, the legacy of a king echoes through time. Kingship embodies a complex interplay of tradition, responsibility, and the dynamics of ruling a kingdom. Beyond the royal trappings, a king's true measure lies in the impact on the lives of the people."
+user_input = "Hello, my friend? How are you?"
 paraphrase(user_input, 0)
 
 
