@@ -172,6 +172,14 @@ def get_chatrooms(username: str) -> list[dict]:
     return output
 
 
+def add_chat_member(username: str, chatroom_id: int):
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""INSERT INTO chat_members (chatroom_id, username) VALUES (?, ?)""",
+                       (chatroom_id, username))
+        conn.commit()
+
+
 def get_messages(chatroom_id: int) -> list[dict]:
     with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
         cursor = conn.cursor()
