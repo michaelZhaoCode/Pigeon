@@ -4,7 +4,7 @@ from base64 import b64encode
 from createFont import finalCreateFont
 
 import sql_functions
-from app.cohere import paraphrase, analyze
+from app.cohere_functions import paraphrase, analyze
 from dalle import generate_image
 
 
