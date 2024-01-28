@@ -59,8 +59,8 @@ def send_postcard():
     receiver = request.get_json()['receiver']
     style = request.get_json()['style']
     text = request.get_json()['text']
-    # image_link = generate_image(text)
-    image_link = ""
+    image_link = generate_image(text)
+    # image_link = ""
 
     if style != "":
         text = paraphrase(text, style, [], "Don't go too long beyond the original message")
