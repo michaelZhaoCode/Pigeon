@@ -6,6 +6,7 @@ const CreatePostCard = ({ isVisible, onClose }) => {
   const [sender, setSender] = useState("");
   const [recipient, setRecipient] = useState("");
   const [content, setContent] = useState("");
+  const [styleIndex, setStyleIndex] = useState("");
 
   const dropdownItems = [
     "Medieval",
@@ -17,9 +18,9 @@ const CreatePostCard = ({ isVisible, onClose }) => {
     "Gen X",
     "Gen Z",
   ];
-  const handleSelection = (item) => {
-    console.log("Selected item:", item);
-    // Perform any action on item selection
+
+  const handleSelection = (index) => {
+    setStyleIndex(index.toString());
   };
 
   if (!isVisible) return null;
@@ -36,6 +37,7 @@ const CreatePostCard = ({ isVisible, onClose }) => {
         sender: sender,
         receiver: recipient,
         text: content,
+        style: styleIndex,
       }),
     });
 
