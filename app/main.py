@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-import sql
+import sql_functions
 from base64 import b64encode
 
 app = Flask(__name__)
@@ -15,7 +15,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 def register():
     username = request.get_json()['username']
     # TODO: incorporate font
-    sql.add_user(username, font_filepath="main.py")
+    sql_functions.add_user(username, font_filepath="main.py")
 
     return 200
 
@@ -24,7 +24,7 @@ def register():
 @cross_origin()
 def view_postcards():
     username = request.get_json()['username']
-    output = sql.get_postcards(username)
+    output = sql_functions.get_postcards(username)
 
     return jsonify({"output": output})
 
@@ -38,7 +38,7 @@ def send_postcard():
     # TODO: incorporate DALLE to get image link
     image_link = ""
 
-    sql.add_postcard(sender, receiver, text, image_link)
+    sql_functions.add_postcard(sender, receiver, text, image_link)
 
     return 200
 
@@ -57,7 +57,7 @@ def rewrite_postcard():
 @cross_origin()
 def view_chatrooms():
     username = request.get_json()['username']
-    output = sql.get_chatrooms(username)
+    output = sql_functions.get_chatrooms(username)
 
     return jsonify({"output": output})
 
@@ -67,7 +67,7 @@ def view_chatrooms():
 def create_chatroom():
     usernames = request.get_json()['usernames']
     chatroom_name = request.get_json()['chatroom_name']
-    sql.add_chatroom(usernames, chatroom_name)
+    sql_functions.add_chatroom(usernames, chatroom_name)
 
     return 200
 
@@ -76,7 +76,7 @@ def create_chatroom():
 @cross_origin()
 def choose_chatroom():
     chatroom_id = request.get_json()['chatroom_id']
-    output = sql.get_messages(chatroom_id)
+    output = sql_functions.get_messages(chatroom_id)
 
     for message in output:
         binary_font = message['font']
@@ -93,7 +93,7 @@ def send_chat():
     chatroom_id = request.get_json()['chatroom_id']
     text = request.get_json()['text']
 
-    sql.add_message(username, text, chatroom_id)
+    sql_functions.add_message(username, text, chatroom_id)
 
     return 200
 
@@ -102,7 +102,7 @@ def send_chat():
 @cross_origin()
 def view_profile():
     username = request.get_json()['username']
-    output = sql.get_bio(username)
+    output = sql_functions.get_bio(username)
 
     return jsonify(output)
 
@@ -113,6 +113,6 @@ def edit_bio():
     username = request.get_json()['username']
     text = request.get_json()['text']
 
-    sql.change_bio(username, text)
+    sql_functions.change_bio(username, text)
 
     return 200
