@@ -10,13 +10,13 @@ const CreatePostCard = ({ isVisible, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Call the API to send the postcard
-    const response = await fetch("http://localhost:5000/send_postcard/", {
+    const response = await fetch("http://127.0.0.1:5000/send_postcard/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sender,
+        sender: sender,
         receiver: recipient,
         text: content,
       }),

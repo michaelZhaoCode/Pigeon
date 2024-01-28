@@ -18,12 +18,12 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPostcards = async () => {
       try {
-        const response = await fetch("http://localhost:5000/view_postcards/", {
+        const response = await fetch("http://127.0.0.1:5000/view_postcards/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: "yourUsername" }),
+          body: JSON.stringify({ username: "Michael" }),
         });
 
         if (response.ok) {

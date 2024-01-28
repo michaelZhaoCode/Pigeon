@@ -9,12 +9,36 @@ const MyProfilePage = React.forwardRef(({ isVisible }, ref) => {
 
   const textAreaRef = useRef(null);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (editMode) {
-      // Save logic here
       setEditMode(false);
-      // TODO: Call API to save the updated aboutText
-      // Example: await saveProfileAboutAPI(aboutText);
+
+      // API call to save the updated aboutText
+      try {
+        const response = await fetch('http://127.0.0.1:5000/edit_bio', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Include authorization or other headers if needed
+          },
+          body: JSON.stringify({
+            text: aboutText,
+            // Include other user profile data if necessary
+          }),
+        });
+
+        if (response.ok) {
+          // Handle successful response
+          console.log("Profile updated successfully");
+        } else {
+          // Handle non-successful response
+          console.error("Failed to update profile");
+        }
+      } catch (error) {
+        // Handle errors in sending request or server-side issues
+        console.error("Error while updating profile:", error);
+      }
+
     } else {
       setEditMode(true);
     }

@@ -11,6 +11,7 @@ def initialize_database():
     create_chat_members_table()
     create_messages_table()
     create_postcards_table()
+    create_generations_table()
 
 
 def reset_database():
