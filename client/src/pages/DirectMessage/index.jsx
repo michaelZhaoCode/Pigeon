@@ -26,7 +26,7 @@ const DirectMessagePage = () => {
 
   return (
     <>
-      <div className="bg-gray-100 flex flex-col font-sfprodisplay items-center justify-start mx-auto w-full">
+      <div className="bg-gray-100 flex flex-col font-sfprodisplay justify-start mx-auto w-full h-screen">
         <div className="flex md:flex-col flex-row md:gap-[52px] items-center justify-between w-full">
           {/* Right Side */}
           <div className="flex flex-col font-inter items-start justify-start w-full">
@@ -51,15 +51,28 @@ const DirectMessagePage = () => {
             </div>
 
             {/* Bottom */}
-            <div className="flex md:flex-col flex-row gap-[15px] items-center justify-start mt-[45px] w-full">
+            <div className=" absolute bottom-0 flex md:flex-col flex-row gap-[15px] items-center justify-start mt-[45px] w-full">
               <Input
                 name="Field"
                 placeholder="Start writing..."
-                className="font-medium p-0 placeholder:text-gray-500 text-left text-sm w-full"
+                className="font-medium p-0 placeholder:text-gray-500 text-left text-sm bg-stone-300 h-9 rounded-xl"
                 wrapClassName="flex md:flex-1 rounded-[12px] md:w-full"
                 color="gray_100"
                 size="2xl"
               ></Input>
+              <Button
+                className="flex h-12 items-center justify-center md:mt-0 my-[5px] w-12 mx-2"
+                shape="round"
+                color="indigo_A200"
+                size="md"
+                variant="fill"
+              >
+                <Img
+                  className="h-[22px]"
+                  src="images/img_minimize_48X48.svg"
+                  alt="minimize"
+                />
+              </Button>
               <Dropdown items={dropdownItems} onItemSelect={handleSelection} />
               <Button
                 className="flex h-12 items-center justify-center md:mt-0 my-[5px] w-12 mx-2"
