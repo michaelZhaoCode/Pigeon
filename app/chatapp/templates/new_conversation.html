@@ -1,0 +1,8 @@
+<html>
+    <h1>New Conversation</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}: {{ form.username() }} {% for error in form.username.errors %}{{ error }}{% endfor %}<br>
+        {{ form.submit() }}
+    </form>
+</html>

@@ -5,14 +5,27 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
 import requests
 
-DataAndCreds = {
-    "email": "nandwanikhushaal@gmail.com",
-    "password": "Hello@21112001",
-    "username": "Yilei2", # this will also be the font name
-    "uploadFile": "path-to-user-uploaded-document",
-}
+DataAndCreds = {}
+driver = None
 
-driver = webdriver.Firefox()
+def setup():
+    DataAndCreds = {
+        "email": "nandwanikhushaal@gmail.com",
+        "password": "Hello@21112001",
+        "username": "", # this will also be the font name
+        "uploadFile": "",
+    }
+
+    # read username and uploadfile from details.csv
+    with open("details.csv", "r") as file:
+        lines = file.readlines()
+        DataAndCreds["username"] = lines[0].strip()
+        DataAndCreds["uploadFile"] = lines[1].strip()
+    # clear the file
+    with open("details.csv", "w") as file:
+        file.write("")
+
+    driver = webdriver.Firefox()
 
 
 def login():
@@ -20,7 +33,6 @@ def login():
     driver.find_element(By.ID, "id_username").send_keys(DataAndCreds["email"])
     driver.find_element(By.ID, "id_password").send_keys(DataAndCreds["password"])
     driver.find_element(By.ID, "login_button").click()
-
 
 def createFont():
     driver.get("https://www.calligraphr.com/en/webapp/app_home/?/fonts")
@@ -68,7 +80,8 @@ def downloadFont():
     with open(f"{fontName}.ttf", "wb") as file:
         file.write(response.content)
 
-if __name__ == "__main__":
+def createFont():
+    setup()
     login()
     createFont()
     uploadFontFile()
