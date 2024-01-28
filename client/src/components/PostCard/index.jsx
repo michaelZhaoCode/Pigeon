@@ -25,7 +25,7 @@ const PostCard = ({ imageUrl, title, content, sender, receiver, time }) => {
       ];
 
   return (
-    <div className="bg-white border rounded-xl shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] mx-auto flex">
+    <div className="bg-white border rounded-xl shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] mx-auto flex hover:shadow-xl transition">
       {/* Left Image */}
       <div className="flex w-1/2 rounded-l-xl justify-center items-center">
         {/* Set Img width to 100% of its container and remove margins */}
