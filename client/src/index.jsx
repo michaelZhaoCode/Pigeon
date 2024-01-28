@@ -7,9 +7,8 @@ import "./styles/index.css";
 import "./styles/tailwind.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-
+const domain = "dev-fs1aio2oyvsjflh2.us.auth0.com";
+const clientId = "AmVYUUE99lhXLs42cMUjhB0znHPrIJya";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,5 +20,5 @@ ReactDOM.render(
       <App />
     </Auth0Provider>
   </React.StrictMode>,
-  document.getElementById("root"),
+  document.getElementById("root")
 );
