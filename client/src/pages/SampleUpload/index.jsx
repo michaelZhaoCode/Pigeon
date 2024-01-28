@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 
-
 const SampleUploadPage = () => {
     const [file, setFile] = useState(null);
     const downloaded = false;
@@ -10,9 +9,30 @@ const SampleUploadPage = () => {
     };  
 
     const handleUpload = async () => {
-        const formData = new FormData();
-        formData.append("file", file);
+        const jsonBody = JSON.stringify({
+            username: "John",
+            font_path: "/Users/khushaal/Desktop/Winter2024/uofthacks/Pigeon/client/public/fontcreate-3.pdf"
+        });
+    
+        try {
+            const response = await fetch("http://127.0.0.1:5000/create_font", {
+                method: "POST",
+                body: jsonBody,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+    
+            if (response.ok) {
+                console.log("Upload successful");
+            } else {
+                console.error("Upload failed with status", response.status);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
     };
+    
 
     // file to set open for downloading client/src/assets/fontcreate.pdf
 
