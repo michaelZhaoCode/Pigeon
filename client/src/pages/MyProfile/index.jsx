@@ -26,38 +26,41 @@ const MyProfilePage = React.forwardRef(({ isVisible }, ref) => {
       console.error("Error fetching profile:", error);
     }
   };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
-//   const updateBio = async () => {
-//     try {
-//       const response = await fetch("http://127.0.0.1:5000/edit_bio/", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ username, text: aboutText }),
-//       });
+  //   const updateBio = async () => {
+  //     try {
+  //       const response = await fetch("http://127.0.0.1:5000/edit_bio/", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ username, text: aboutText }),
+  //       });
 
-//       if (!response.ok) {
-//         console.error("Failed to update bio");
-//       }
-//     } catch (error) {
-//       console.error("Error updating bio:", error);
-//     }
-//   };
+  //       if (!response.ok) {
+  //         console.error("Failed to update bio");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error updating bio:", error);
+  //     }
+  //   };
 
-//   const handleButtonClick = () => {
-//     if (editMode) {
-//       setEditMode(false);
-//       updateBio();
-  
+  //   const handleButtonClick = () => {
+  //     if (editMode) {
+  //       setEditMode(false);
+  //       updateBio();
+
   const handleButtonClick = async () => {
     if (editMode) {
       setEditMode(false);
 
       // API call to save the updated aboutText
       try {
-        const response = await fetch('http://127.0.0.1:5000/edit_bio', {
-          method: 'POST',
+        const response = await fetch("http://127.0.0.1:5000/edit_bio", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             // Include authorization or other headers if needed
           },
           body: JSON.stringify({
