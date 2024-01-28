@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Img, Input, Line, List, Text } from "components";
 import ChooseChat from "components/ChooseChat";
@@ -7,14 +7,40 @@ import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
 import Sidebar1 from "components/Sidebar1";
 import MyProfilePage from "pages/MyProfile";
 import { CloseSVG } from "../../assets/images";
+import axios from "axios";
 import DirectMessagePage from "pages/DirectMessage";
 
 const MessagesPage = () => {
   const navigate = useNavigate();
   const { showProfile, profileRef } = useProfileVisibility();
-  const { roomMembers, setRoomMembers } = useState([]);
+  const [chatrooms, setChatrooms] = useState([]);
   const [isCreateChatVisible, setCreateChatVisible] = useState(false);
   const [showDirectMessage, setShowDirectMessage] = useState(false);
+
+  useEffect(() => {
+    const fetchChatrooms = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/view_chatrooms/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: "YourUsername" }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setChatrooms(data.output);
+      } catch (error) {
+        console.error("Error fetching chatrooms:", error);
+      }
+    };
+
+    fetchChatrooms();
+  }, []);
 
   const toggleCreateChatVisible = () => {
     setCreateChatVisible(!isCreateChatVisible);
@@ -59,7 +85,7 @@ const MessagesPage = () => {
                 className="flex flex-col font-inter gap-5 items-center w-[98%] "
                 orientation="vertical"
               >
-                <ChooseChat
+                {/* <ChooseChat
                   senderName=""
                   mesasgePreview=""
                   timeStamp=""
@@ -76,7 +102,17 @@ const MessagesPage = () => {
                   mesasgePreview=""
                   timeStamp=""
                   onClick={handleChatSelect}
-                ></ChooseChat>
+                ></ChooseChat> */}
+                {chatrooms.map((chatroom) => (
+                  <ChooseChat
+                    key={chatroom.chatroom_id}
+                    senderName={chatroom.chatroom_name}
+                    messagePreview={"Latest message or some placeholder text"}
+                    timestamp={"Timestamp"}
+                    onClick={handleChatSelect}
+                    chatId={chatroom.chatroom_id}
+                  />
+                ))}
               </List>
             </div>
           </div>
