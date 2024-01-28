@@ -25,11 +25,14 @@ const Dropdown = ({ items, onItemSelect }) => {
   };
 
   return (
-    <div className="hs-dropdown relative inline-flex" ref={dropdownRef}>
+    <div
+      className="hs-dropdown relative inline-flex bg-stone-300 rounded-3xl"
+      ref={dropdownRef}
+    >
       <button
         id="hs-dropdown-custom-trigger"
         type="button"
-        className="hs-dropdown-toggle py-1 ps-1 pe-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+        className="hs-dropdown-toggle py-1 ps-1 pe-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-full bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         onClick={toggleDropdown}
       >
         <img
@@ -59,7 +62,7 @@ const Dropdown = ({ items, onItemSelect }) => {
       </button>
 
       <div
-        className={`hs-dropdown-menu transition-[opacity,margin] duration-300 ${
+        className={`hs-dropdown-menu transition-[opacity,margin] duration-300  bg-stone-300 ${
           isOpen ? "opacity-100" : "opacity-0 hidden"
         } min-w-[15rem] bg-white shadow-md rounded-lg p-2 absolute bottom-full mb-2 dark:bg-gray-800 dark:border dark:border-gray-700`}
         aria-labelledby="hs-dropdown-custom-trigger"
