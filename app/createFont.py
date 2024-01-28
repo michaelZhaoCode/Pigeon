@@ -4,28 +4,35 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
 import requests
+# from selenium.webdriver.firefox.options import Options
 
-DataAndCreds = {}
+# options = Options()
+# options.headless = True
+
+
+DataAndCreds = {
+    "email": "nandwanikhushaal@gmail.com",
+    "password": "Hello@21112001",
+    'username': "",
+    "uploadFile": ""
+    # "username": "John", # this will also be the font name
+    # "uploadFile": "/Users/khushaal/Desktop/Winter2024/uofthacks/Pigeon/client/public/fontcreate-3.pdf",
+}
 driver = None
 
 def setup():
-    DataAndCreds = {
-        "email": "nandwanikhushaal@gmail.com",
-        "password": "Hello@21112001",
-        "username": "", # this will also be the font name
-        "uploadFile": "",
-    }
-
     # read username and uploadfile from details.csv
     with open("details.csv", "r") as file:
         lines = file.readlines()
-        DataAndCreds["username"] = lines[0].strip()
-        DataAndCreds["uploadFile"] = lines[1].strip()
+        # seperated by commas
+        DataAndCreds["username"] = lines[0].split(",")[0]
+        DataAndCreds["uploadFile"] = lines[0].split(",")[1]
+        print(DataAndCreds)
     # clear the file
     with open("details.csv", "w") as file:
         file.write("")
 
-    driver = webdriver.Firefox()
+driver = webdriver.Firefox()
 
 
 def login():
@@ -39,6 +46,8 @@ def createFont():
     driver.find_element(By.ID, "fonts-tb-load-template").click()
 
 def uploadFontFile():
+    print(DataAndCreds["uploadFile"], "is the file we are upload\n\n\n")
+
     fileinput = driver.find_element(By.ID, "template-upload-fileinput")
     fileinput.send_keys(DataAndCreds["uploadFile"])
     # click upload file
@@ -80,8 +89,20 @@ def downloadFont():
     with open(f"{fontName}.ttf", "wb") as file:
         file.write(response.content)
 
-def createFont():
+
+
+def finalCreateFont():
     setup()
+    login()
+    createFont()
+    uploadFontFile()
+    processFontFile()
+    setFontName()
+    downloadFont()
+    driver.quit()
+
+if __name__ == "__main__":
+    DataAndCreds = setup()
     login()
     createFont()
     uploadFontFile()
