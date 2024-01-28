@@ -127,7 +127,7 @@ def send_chat():
     text = request.get_json()['text']
 
     if style != "":
-        text = paraphrase(text, style, [], "Don't go too long beyond the original message")
+        text = paraphrase(text, int(style), [], "Don't go too long beyond the original message")
 
     sql_functions.add_message(username, text, chatroom_id)
 
