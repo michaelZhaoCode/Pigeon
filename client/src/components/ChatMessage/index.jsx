@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Text } from "components";
 
-const ChatMessage = ({ senderName, messagePreview, timestamp }) => {
+const ChatMessage = ({ senderName, message, timestamp, font }) => {
   const navigate = useNavigate();
   const lineStyle = {
     textDecoration: "1px underline dashed #dcdcdc",
@@ -22,7 +22,7 @@ const ChatMessage = ({ senderName, messagePreview, timestamp }) => {
           style={lineStyle}
           size="txtInterRegular14Gray500"
         >
-          {messagePreview || "Preview Message Preview Message Preview Message "}
+          {message || "message message message message message "}
         </Text>
       </div>
 

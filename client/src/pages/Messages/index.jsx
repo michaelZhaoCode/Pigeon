@@ -85,12 +85,6 @@ const MessagesPage = () => {
                 className="flex flex-col font-inter gap-5 items-center w-[98%] "
                 orientation="vertical"
               >
-                {/* <ChooseChat
-                  senderName=""
-                  mesasgePreview=""
-                  timeStamp=""
-                  onClick={handleChatSelect}
-                ></ChooseChat>
                 <ChooseChat
                   senderName=""
                   mesasgePreview=""
@@ -102,7 +96,13 @@ const MessagesPage = () => {
                   mesasgePreview=""
                   timeStamp=""
                   onClick={handleChatSelect}
-                ></ChooseChat> */}
+                ></ChooseChat>
+                <ChooseChat
+                  senderName=""
+                  mesasgePreview=""
+                  timeStamp=""
+                  onClick={handleChatSelect}
+                ></ChooseChat>
                 {chatrooms.map((chatroom) => (
                   <ChooseChat
                     key={chatroom.chatroom_id}
