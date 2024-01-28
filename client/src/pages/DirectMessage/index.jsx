@@ -110,9 +110,9 @@ const DirectMessagePage = ({ chatroomId }) => {
                 >
                   <ChatMessage
                     senderName={message.username}
-                    messagePreview={message.text}
+                    message={message.text}
                     timestamp={message.time}
-                    font={message.font}
+                    // font={message.font}
                   />
                 </div>
               ))}
