@@ -1,11 +1,27 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Img, Input, Text } from "components";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const LoginPage = () => {
+  const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    // You might want to send username and password to Auth0 for authentication
+    // This is a basic example, typically you would not handle passwords directly
+    loginWithRedirect({
+      redirectUri: window.location.origin + '/home',
+      // Add additional parameters as needed for Auth0 authentication
+    }).then(() => {
+      navigate("/home");
+    }).catch((error) => {
+      console.error("Authentication failed: ", error);
+    });
+  };
 
   return (
     <>
@@ -79,7 +95,9 @@ const LoginPage = () => {
                   shape="round"
                   color="gray_500_6c"
                   variant="outline"
-                ></Input>
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </div>
               <div className="flex flex-col gap-3.5 items-start justify-start w-full">
                 <Text
@@ -97,13 +115,15 @@ const LoginPage = () => {
                   shape="round"
                   color="gray_500_6c"
                   variant="outline"
-                ></Input>
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
             </div>
 
             <Button
-              className="common-pointer cursor-pointer font-bold min-w-[350px]  mx-10 mb-5 rounded-[29px] text-center text-sm"
-              onClick={() => navigate("/home")}
+              className="common-pointer cursor-pointer font-bold min-w-[350px] mx-10 mb-5 rounded-[29px] text-center text-sm"
+              onClick={handleLogin}
               color="indigo_A200"
               size="xl"
               variant="fill"
