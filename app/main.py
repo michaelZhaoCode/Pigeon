@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-import sql_functions
 from base64 import b64encode
 from createFont import finalCreateFont
+
+import sql_functions
+from cohereapi.main import paraphrase
+from dalle import generate_image
+
 
 app = Flask(__name__)
 
@@ -36,8 +40,7 @@ def send_postcard():
     sender = request.get_json()['sender']
     receiver = request.get_json()['receiver']
     text = request.get_json()['text']
-    # TODO: incorporate DALLE to get image link
-    image_link = ""
+    image_link = generate_image(text)
 
     sql_functions.add_postcard(sender, receiver, text, image_link)
 
@@ -48,8 +51,8 @@ def send_postcard():
 @cross_origin()
 def rewrite_postcard():
     text = request.get_json()['text']
-    # TODO: incorporate rewrite
-    new_text = ""
+    style = request.get_json()['style']
+    new_text = paraphrase(text, int(style))
 
     return jsonify({"output": new_text})
 

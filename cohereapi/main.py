@@ -4,7 +4,7 @@ co = cohere.Client('yTir03SIfA0ft4J5G3pRIOBYKDOvyJY0OcAFrrRv')
 # define the function of rephrasing text in a speaking style in different eras(old English)
 def paraphrase(text, style):
     """
-    Style is an integer between 0 and 4
+    Style is an integer between 0 and 7
     0 : Medieval Era (5th to 15th century)
     1 : Renaissance (14th to 17th century)
     2 : Victorian Era (19th century)
@@ -30,12 +30,12 @@ def paraphrase(text, style):
     }
 
     response = co.generate(
-    prompt=f'Replace the following text in the speaking style in {x[style]}: \n {text}',
+    prompt=f'Rewrite the following text in the writing style of the {x[style]}: \n {text}',
     )
-    print(response)
+    return response
 
 # Call the function
-user_input = "Hello, my friend? How are you?"
-paraphrase(user_input, 0)
+# user_input = "Hello, my friend? How are you?"
+# paraphrase(user_input, 0)
 
 
