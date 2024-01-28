@@ -12,10 +12,9 @@ const PostCard = ({ imageUrl, title, content, sender, receiver, time }) => {
   };
 
   const lineStyle = {
-    borderBottom: "1px dashed #dcdcdc",
-    paddingBottom: "10em",
-    marginBottom: "2em",
-    textDecoration: "underline",
+    borderBottom: "2px dashed #dcdcdc",
+    paddingBottom: "30%",
+    textDecoration: "1px underline dashed #dcdcdc",
   };
 
   // Ensure content is not undefined before splitting
@@ -29,16 +28,17 @@ const PostCard = ({ imageUrl, title, content, sender, receiver, time }) => {
     <div className="bg-white border rounded-xl shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] mx-auto flex">
       {/* Left Image */}
       <div className="flex w-1/2 rounded-l-xl justify-center items-center">
+        {/* Set Img width to 100% of its container and remove margins */}
         <Img
-          className="w-[50%] mx-10"
-          src={imageUrl || "./images/pigeon.png"}
-          alt={title || "DalleImage"}
+          className="w-full h-auto" // Make the image fill the div exactly
+          src={imageUrl}
+          alt={"DalleImage"}
         />
       </div>
       {/* Right Information */}
       <div className="flex-1 flex flex-col rounded-r-xl" style={paperStyle}>
-        <h3 className="font-bold mb-4">{title || "Title"}</h3>
-        <div className="mb-4">
+        <h3 className="font-bold mb-1">{title || "Title"}</h3>
+        <div className="mb-1">
           {`Sent by ${sender || "Vincent"} to ${receiver || "Vincent2"}`}
         </div>
         <div className="mb-4">{` ${time || "2024-01-27 07:00 PM"}`}</div>
