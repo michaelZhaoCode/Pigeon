@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import sql_functions
 from base64 import b64encode
+from createFont import createFont
 
 app = Flask(__name__)
 
@@ -116,6 +117,23 @@ def edit_bio():
     sql_functions.change_bio(username, text)
 
     return 200
+
+@app.route('/create_font', methods=['POST'])
+@cross_origin()
+def create_font():
+    username = request.get_json()['username']
+    font_path = request.get_json()['font_path']
+    # write username, font_path to details.csv
+    with open("details.csv", "w") as file:
+        file.write(username + ",")
+        file.write(font_path + "\n")
+    # run main.py
+    createFont()
+        
+
+    return 200
+
+
 
 
 if __name__ == "__main__":
