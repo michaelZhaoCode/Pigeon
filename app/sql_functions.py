@@ -240,7 +240,10 @@ def get_bio(username: str) -> dict:
                        (username,))
         result = cursor.fetchone()
 
-    output = {"bio": result[0], "font": result[1]}
+    if result:
+        output = {"bio": result[0], "font": result[1]}
+    else:
+        output = {"bio": "Hello, nice to meet you!", "font": ""}
 
     return output
 

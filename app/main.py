@@ -62,7 +62,7 @@ def send_postcard():
     # image_link = ""
 
     if style != "":
-        text = paraphrase(text, style, [], "Don't go too long beyond the original message")
+        text = paraphrase(text, int(style), [], "Don't go too long beyond the original message")
 
     # sql_functions.add_generation(sender, "Give me a good example of postcard text", text)
 
@@ -97,7 +97,7 @@ def view_chatrooms():
 @app.route('/create_chatroom/', methods=['POST'])
 @cross_origin()
 def create_chatroom():
-    usernames = [x.strip() for x in request.get_json()['usernames'].split(",")]  # clean values
+    usernames = [x.strip() for x in request.get_json()['usernames']]  # clean values
     chatroom_name = request.get_json()['chatroom_name']
     sql_functions.add_chatroom(usernames, chatroom_name)
 

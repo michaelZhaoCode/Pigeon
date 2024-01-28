@@ -32,7 +32,7 @@ def paraphrase(text, style, history, instructions):
     }
 
     response = co.chat(
-        message=f'Follow these instructions: {instructions} \n Rewrite the following text in the writing style of the {x[style]}: \n {text}',
+        message=f'Follow these instructions: {instructions} \n Rewrite the following text in the writing style of the {x[style]}, Include only the new text and no additional text: \n {text}',
         chat_history=history
     )
     return response.text
@@ -46,9 +46,9 @@ def analyze(history):
     return response.text
 
 
-# Call the function
+# # Call the function
 # user_input = "Hello, my friend? How are you?"
-# print(paraphrase(user_input, 0, []))
+# print(paraphrase(user_input, 0, [], ""))
 
 # print(analyze([
 #     {"role": "USER", "message": "Who discovered gravity?"},
