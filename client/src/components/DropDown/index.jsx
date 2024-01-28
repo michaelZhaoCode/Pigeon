@@ -25,7 +25,10 @@ const Dropdown = ({ items, onItemSelect }) => {
   };
 
   return (
-    <div className="hs-dropdown relative inline-flex" ref={dropdownRef}>
+    <div
+      className="hs-dropdown relative inline-flex bg-stone-300 rounded-3xl"
+      ref={dropdownRef}
+    >
       <button
         id="hs-dropdown-custom-trigger"
         type="button"
@@ -59,7 +62,7 @@ const Dropdown = ({ items, onItemSelect }) => {
       </button>
 
       <div
-        className={`hs-dropdown-menu transition-[opacity,margin] duration-300 ${
+        className={`hs-dropdown-menu transition-[opacity,margin] duration-300  bg-stone-300 ${
           isOpen ? "opacity-100" : "opacity-0 hidden"
         } min-w-[15rem] bg-white shadow-md rounded-lg p-2 absolute bottom-full mb-2 dark:bg-gray-800 dark:border dark:border-gray-700`}
         aria-labelledby="hs-dropdown-custom-trigger"

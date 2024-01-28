@@ -51,7 +51,7 @@ const DirectMessagePage = () => {
             </div>
 
             {/* Bottom */}
-            <div className="flex md:flex-col flex-row gap-[15px] items-center justify-between mt-[45px] w-full">
+            <div className="flex md:flex-col flex-row gap-[15px] items-center justify-start mt-[45px] w-full">
               <Input
                 name="Field"
                 placeholder="Start writing..."
