@@ -15,6 +15,7 @@ const MessagesPage = () => {
   const { showProfile, profileRef } = useProfileVisibility();
   const [chatrooms, setChatrooms] = useState([]);
   const [isCreateChatVisible, setCreateChatVisible] = useState(false);
+  const [selectedChatroomId, setSelectedChatroomId] = useState(null);
   const [showDirectMessage, setShowDirectMessage] = useState(false);
 
   useEffect(() => {
@@ -46,8 +47,9 @@ const MessagesPage = () => {
     setCreateChatVisible(!isCreateChatVisible);
   };
 
-  const handleChatSelect = () => {
-    setShowDirectMessage(!showDirectMessage);
+  const handleChatSelect = (chatroomId) => {
+    setSelectedChatroomId(chatroomId);
+    setShowDirectMessage(true);
   };
   return (
     <>
@@ -85,7 +87,7 @@ const MessagesPage = () => {
                 className="flex flex-col font-inter gap-5 items-center w-[98%] "
                 orientation="vertical"
               >
-                <ChooseChat
+                {/* <ChooseChat
                   senderName=""
                   mesasgePreview=""
                   timeStamp=""
@@ -102,7 +104,7 @@ const MessagesPage = () => {
                   mesasgePreview=""
                   timeStamp=""
                   onClick={handleChatSelect}
-                ></ChooseChat>
+                ></ChooseChat> */}
                 {chatrooms.map((chatroom) => (
                   <ChooseChat
                     key={chatroom.chatroom_id}
@@ -144,7 +146,9 @@ const MessagesPage = () => {
                 </div>
               </div>
             )}
-            {showDirectMessage && <DirectMessagePage />}
+            {showDirectMessage && (
+              <DirectMessagePage chatroomId={selectedChatroomId} />
+            )}
           </div>
         </div>
       </div>
