@@ -13,7 +13,7 @@ const MyProfilePage = React.forwardRef(({ isVisible }, ref) => {
     if (editMode) {
       // Save logic here
       setEditMode(false);
-      // Call your API to save the updated aboutText
+      // Call API to save the updated aboutText
       // Example: await saveProfileAboutAPI(aboutText);
     } else {
       setEditMode(true);
