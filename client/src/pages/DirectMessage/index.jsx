@@ -1,7 +1,8 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
-
+import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
+import MyProfilePage from "pages/MyProfile";
 import { Button, Img, Input, Line, List, Text } from "components";
 import Sidebar1 from "components/Sidebar1";
 
@@ -9,6 +10,7 @@ import { CloseSVG } from "../../assets/images";
 
 const DirectMessagePage = () => {
   const navigate = useNavigate();
+  const { showProfile, profileRef } = useProfileVisibility();
 
   const [searchvalue, setSearchvalue] = React.useState("");
 
@@ -247,6 +249,7 @@ const DirectMessagePage = () => {
           ;
         </div>
       </div>
+      <MyProfilePage ref={profileRef} isVisible={showProfile} />
     </>
   );
 };

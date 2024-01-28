@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-
 import { useNavigate } from "react-router-dom";
-import { ProfileContext } from "pages/MyProfile/profileContext";
-import MyProfilePage from "pages/MyProfile";
 import { Button, Img, Input, Line, List, Text } from "components";
+import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
 import Sidebar1 from "components/Sidebar1";
-
+import MyProfilePage from "pages/MyProfile";
 import { CloseSVG } from "../../assets/images";
 
 const MessagesPage = () => {
   const navigate = useNavigate();
-  const { showProfile } = useContext(ProfileContext);
+  const { showProfile, profileRef } = useProfileVisibility();
 
   const [searchvalue, setSearchvalue] = React.useState("");
 
@@ -160,6 +158,7 @@ const MessagesPage = () => {
         </div>
         <MyProfilePage isVisible={false}></MyProfilePage>
       </div>
+      <MyProfilePage ref={profileRef} isVisible={showProfile} />
     </>
   );
 };
