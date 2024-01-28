@@ -17,7 +17,7 @@ const Sidebar1 = (props) => {
         <div className="bg-yellow-700 flex flex-col items-center justify-start p-5 md:px-10 w-full h-full">
           <Img className="h-12 w-12" src="images/pigeon.png" alt="settings" />
           <Button
-            className={`flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400`}
+            className={`flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 hover:shadow-lg transition`}
             shape="round"
             color="white_A700_33"
             size="md"
@@ -27,7 +27,7 @@ const Sidebar1 = (props) => {
             <Img className="h-6" src="images/img_home_1.svg" alt="home" />
           </Button>
           <Button
-            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400"
+            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 hover:shadow-lg transition"
             shape="round"
             color="white_A700_33"
             size="md"
@@ -37,7 +37,7 @@ const Sidebar1 = (props) => {
             <Img className="h-6" src="images/img_chat.svg" alt="chat" />
           </Button>
           <Button
-            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400"
+            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 hover:shadow-lg transition"
             shape="round"
             color="white_A700_33"
             size="md"
@@ -47,7 +47,7 @@ const Sidebar1 = (props) => {
             <Img className="h-6" src="images/img_mail.svg" alt="mail" />
           </Button>
           <Button
-            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 focus:bg-amber-400"
+            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 focus:bg-amber-400 hover:shadow-lg transition"
             shape="round"
             color="white_A700_33"
             size="md"
@@ -57,7 +57,7 @@ const Sidebar1 = (props) => {
             <Img className="h-6" src="images/img_user.svg" alt="user" />
           </Button>
           <Button
-            className="absolute bottom-10 flex h-12 items-center justify-center my-4 w-12 hover:bg-amber-400"
+            className="absolute bottom-10 flex h-12 items-center justify-center my-4 w-12 hover:bg-amber-400 hover:shadow-lg transition"
             shape="round"
             color="white_A700_33"
             size="lg"
