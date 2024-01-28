@@ -37,16 +37,6 @@ const Sidebar1 = (props) => {
             <Img className="h-6" src="images/img_chat.svg" alt="chat" />
           </Button>
           <Button
-            className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 hover:shadow-lg transition"
-            shape="round"
-            color="white_A700_33"
-            size="md"
-            variant="fill"
-            onClick={() => navigate("")}
-          >
-            <Img className="h-6" src="images/img_mail.svg" alt="mail" />
-          </Button>
-          <Button
             className="flex h-12 items-center justify-center mt-6 w-12 hover:bg-amber-400 focus:bg-amber-400 hover:shadow-lg transition"
             shape="round"
             color="white_A700_33"
