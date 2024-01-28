@@ -8,6 +8,9 @@ import { Button, Img, Input, Line, List, Text, Choose } from "components";
 
 const DirectMessagePage = () => {
   const { showProfile, profileRef } = useProfileVisibility();
+  const [messageInput, setMessageInput] = useState("");
+  const [styleIndex, setStyleIndex] = useState("");
+
   const dropdownItems = [
     "Medieval",
     "Renaissance",
@@ -19,9 +22,8 @@ const DirectMessagePage = () => {
     "Gen Z",
   ];
 
-  const handleSelection = (item) => {
-    console.log("Selected item:", item);
-    // Perform any action on item selection
+  const handleSelection = (index) => {
+    setStyleIndex(index.toString());
   };
 
   const [chatroomId, setChatroomId] =
@@ -45,6 +47,30 @@ const DirectMessagePage = () => {
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
+    }
+  };
+
+  const sendMessage = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/send_chat/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: "currentUser", // Replace with actual username
+          chatroom_id: chatroomId,
+          style: styleIndex,
+          text: messageInput,
+        }),
+      });
+
+      if (response.ok) {
+        setMessageInput(""); // Reset input field
+        fetchMessages(); // Refresh messages
+      } else {
+        console.error("Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
   };
 
@@ -97,29 +123,18 @@ const DirectMessagePage = () => {
 
             {/* Bottom */}
             <div className=" absolute bottom-0 flex md:flex-col flex-row gap-[15px] items-center justify-start mt-[45px] w-full">
-              <Input
+              <input
+                type="text"
                 name="Field"
                 placeholder="Start writing..."
-                className="font-medium p-0 placeholder:text-gray-500 text-left text-sm bg-stone-300 h-9 rounded-xl"
-                wrapClassName="flex md:flex-1 rounded-[12px] md:w-full"
-                color="gray_100"
-                size="2xl"
-              ></Input>
-              <Button
-                className="flex h-12 items-center justify-center md:mt-0 my-[5px] w-12 mx-2"
-                shape="round"
-                color="indigo_A200"
-                size="md"
-                variant="fill"
-              >
-                <Img
-                  className="h-[22px]"
-                  src="images/img_minimize_48X48.svg"
-                  alt="minimize"
-                />
-              </Button>
+                value={messageInput}
+                onChange={(e) => setMessageInput(e.target.value)}
+                className="font-medium p-0 placeholder:text-gray-500 text-left text-sm bg-stone-300 h-9 rounded-xl w-full focus:outline-none focus:ring-0 w-[40%]"
+              />
+
               <Dropdown items={dropdownItems} onItemSelect={handleSelection} />
               <Button
+                onClick={sendMessage}
                 className="flex h-12 items-center justify-center md:mt-0 my-[5px] w-12 mx-2"
                 shape="round"
                 color="indigo_A200"
@@ -128,7 +143,7 @@ const DirectMessagePage = () => {
               >
                 <Img
                   className="h-[22px]"
-                  src="images/img_minimize_48X48.svg"
+                  src="images/send_icon.svg"
                   alt="minimize"
                 />
               </Button>
