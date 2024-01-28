@@ -7,7 +7,7 @@ const CreateChat = ({ isVisible, onClose }) => {
   const handleCreateChatRoom = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/create_chatroom/", {
+      const response = await fetch("http://127.0.0.1:5000/create_chatroom/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
