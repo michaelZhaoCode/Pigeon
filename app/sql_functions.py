@@ -98,6 +98,22 @@ def create_postcards_table():
         conn.commit()
 
 
+# TODO: load message history based on good generations
+# Then augment prompts with examples and also secondary model to generate rules/patterns
+def create_generations_table():
+    """Schema
+    Username: str
+    Input: str
+    Output: str
+    """
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        command = f"CREATE TABLE IF NOT EXISTS generations (chatroom_id INTEGER PRIMARY KEY AUTOINCREMENT, name nvarchar(100))"
+        cursor.execute(command)
+        conn.commit()
+
+
+
 def add_user(username: str, font_filepath: str):
     with open(font_filepath, 'rb') as file:
         font_data = file.read()
