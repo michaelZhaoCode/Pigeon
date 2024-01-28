@@ -1,7 +1,7 @@
 import React from "react";
 import { Img } from "components";
 
-const PostCard = ({ imageUrl, title, content, sender, receiver, time }) => {
+const PostCard = ({ sender, recipient, content, imageUrl, time }) => {
   const paperStyle = {
     background: "#fdf6e3",
     color: "#6b6b6b",
@@ -37,9 +37,9 @@ const PostCard = ({ imageUrl, title, content, sender, receiver, time }) => {
       </div>
       {/* Right Information */}
       <div className="flex-1 flex flex-col rounded-r-xl" style={paperStyle}>
-        <h3 className="font-bold mb-1">{title || "Title"}</h3>
+        {/* <h3 className="font-bold mb-1">{title || "Title"}</h3> */}
         <div className="mb-1">
-          {`Sent by ${sender || "Vincent"} to ${receiver || "Vincent2"}`}
+          {`Sent by ${sender || "Vincent"} to ${recipient || "Vincent2"}`}
         </div>
         <div className="mb-4">{` ${time || "2024-01-27 07:00 PM"}`}</div>
         <div>
