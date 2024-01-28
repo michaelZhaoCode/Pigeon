@@ -1,10 +1,27 @@
 import React, { useState } from "react";
 import { Img } from "components";
+import Dropdown from "components/DropDown";
 
 const CreatePostCard = ({ isVisible, onClose }) => {
   const [sender, setSender] = useState("");
   const [recipient, setRecipient] = useState("");
   const [content, setContent] = useState("");
+
+  const dropdownItems = [
+    "Medieval",
+    "Renaissance",
+    "Victorian Era",
+    "Greatest Generation",
+    "Silent Generation",
+    "Baby Boomers",
+    "Gen X",
+    "Gen Z",
+  ];
+  const handleSelection = (item) => {
+    console.log("Selected item:", item);
+    // Perform any action on item selection
+  };
+
   if (!isVisible) return null;
 
   const handleSubmit = async (event) => {
@@ -83,7 +100,7 @@ const CreatePostCard = ({ isVisible, onClose }) => {
               onChange={(e) => setContent(e.target.value)}
               className="mb-2 p-2"
             />
-
+            <Dropdown items={dropdownItems} onItemSelect={handleSelection} />
             <button
               type="submit"
               className=" bg-stone-300 text-white p-2 rounded my-2"
