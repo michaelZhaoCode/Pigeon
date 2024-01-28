@@ -4,7 +4,7 @@ from base64 import b64encode
 from createFont import finalCreateFont
 
 import sql_functions
-from cohereapi.main import paraphrase
+from cohereapi.main import paraphrase, analyze
 from dalle import generate_image
 
 
@@ -19,8 +19,14 @@ app.config["SESSION_TYPE"] = "filesystem"
 @cross_origin()
 def register():
     username = request.get_json()['username']
-    # TODO: incorporate font
-    sql_functions.add_user(username, font_filepath="main.py")
+    font_path = request.get_json()['font_path']
+
+    # write username, file_path to details.csv
+    with open("details.csv", "w") as file:
+        file.write(username + ",")
+        file.write(font_path + "")
+    finalCreateFont()
+    sql_functions.add_user(username, font_filepath=f"{username}.ttf")
 
     return 200
 
@@ -30,6 +36,11 @@ def register():
 def view_postcards():
     username = request.get_json()['username']
     output = sql_functions.get_postcards(username)
+    generations = sql_functions.get_generations(username)
+
+    if len(generations) > 1:
+        instructions = analyze(generations)
+        sql_functions.change_postcard_style(instructions)
 
     return jsonify({"output": output})
 
@@ -42,6 +53,8 @@ def send_postcard():
     text = request.get_json()['text']
     image_link = generate_image(text)
 
+    sql_functions.add_generation(sender, "Give me a good example of postcard text", text)
+
     sql_functions.add_postcard(sender, receiver, text, image_link)
 
     return 200
@@ -52,7 +65,11 @@ def send_postcard():
 def rewrite_postcard():
     text = request.get_json()['text']
     style = request.get_json()['style']
-    new_text = paraphrase(text, int(style))
+    username = request.get_json()['username']
+    chat_history = sql_functions.get_generations(username)
+    instructions = sql_functions.get_postcard_style(username)
+
+    new_text = paraphrase(text, int(style), chat_history, instructions)
 
     return jsonify({"output": new_text})
 
