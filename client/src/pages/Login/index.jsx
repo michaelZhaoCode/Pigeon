@@ -14,13 +14,15 @@ const LoginPage = () => {
     // You might want to send username and password to Auth0 for authentication
     // This is a basic example, typically you would not handle passwords directly
     loginWithRedirect({
-      redirectUri: window.location.origin + '/home',
+      redirectUri: window.location.origin + "/home",
       // Add additional parameters as needed for Auth0 authentication
-    }).then(() => {
-      navigate("/home");
-    }).catch((error) => {
-      console.error("Authentication failed: ", error);
-    });
+    })
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.error("Authentication failed: ", error);
+      });
   };
 
   return (
@@ -86,7 +88,7 @@ const LoginPage = () => {
                 >
                   Username
                 </Text>
-                <Input
+                {/* <Input
                   name="username"
                   placeholder="Enter your username"
                   className="font-medium p-0 placeholder:text-gray-500 text-left text-sm"
@@ -95,6 +97,14 @@ const LoginPage = () => {
                   shape="round"
                   color="gray_500_6c"
                   variant="outline"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                /> */}
+                <input
+                  name="username"
+                  placeholder="Enter your username"
+                  className="font-medium p-0 placeholder:text-gray-500 text-left text-sm"
+                  type="text" // changed type to 'text'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -106,7 +116,7 @@ const LoginPage = () => {
                 >
                   Password
                 </Text>
-                <Input
+                {/* <Input
                   name="password"
                   placeholder="Enter your password"
                   className="font-medium p-0 placeholder:text-gray-500 text-left text-sm"
@@ -115,6 +125,14 @@ const LoginPage = () => {
                   shape="round"
                   color="gray_500_6c"
                   variant="outline"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                /> */}
+                <input
+                  name="password"
+                  placeholder="Enter your password"
+                  className="font-medium p-0 placeholder:text-gray-500 text-left text-sm"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
