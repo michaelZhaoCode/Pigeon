@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 
 const Dropdown = ({ items, onItemSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("Writing Style");
+
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -17,9 +19,10 @@ const Dropdown = ({ items, onItemSelect }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item, index) => {
+    setSelectedItem(item);
     if (onItemSelect) {
-      onItemSelect(item);
+      onItemSelect(index);
     }
     setIsOpen(false);
   };
@@ -41,7 +44,7 @@ const Dropdown = ({ items, onItemSelect }) => {
           alt="Dropdown"
         />
         <span className="text-gray-600 font-medium truncate max-w-[7.5rem] dark:text-gray-400">
-          Writing Style
+          {selectedItem}
         </span>
         <svg
           className={`hs-dropdown-open:rotate-0 w-4 h-4 mr-2 ${
@@ -72,7 +75,7 @@ const Dropdown = ({ items, onItemSelect }) => {
             key={index}
             className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:bg-gray-700"
             href="#"
-            onClick={() => handleItemClick(item)}
+            onClick={() => handleItemClick(item, index)}
           >
             {item}
           </a>
