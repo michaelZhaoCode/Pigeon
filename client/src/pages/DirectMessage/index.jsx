@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
 import MyProfilePage from "pages/MyProfile";
@@ -24,6 +24,34 @@ const DirectMessagePage = () => {
     // Perform any action on item selection
   };
 
+  const [chatroomId, setChatroomId] =
+    useState(/* some default or passed value */);
+  const [messages, setMessages] = useState([]);
+
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/choose_chatroom/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chatroom_id: chatroomId }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMessages(data.output);
+      } else {
+        // Handle errors
+        console.error("Failed to fetch messages");
+      }
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+  }, [chatroomId]);
+
   return (
     <>
       <div className="bg-gray-100 flex flex-col font-sfprodisplay justify-start mx-auto w-full h-screen">
@@ -41,13 +69,30 @@ const DirectMessagePage = () => {
               </Text>
             </div>
             {/* Chat Messages */}
-            <div className="self-start">
-              {/* First ChatMessage aligned to the left */}
+            {/* <div className="self-start">
               <ChatMessage></ChatMessage>
             </div>
             <div className="self-end">
-              {/* Second ChatMessage aligned to the right */}
               <ChatMessage></ChatMessage>
+            </div> */}
+            <div>
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`my-2 ${
+                    message.username === "currentUser"
+                      ? "self-end"
+                      : "self-start"
+                  }`}
+                >
+                  <ChatMessage
+                    senderName={message.username}
+                    messagePreview={message.text}
+                    timestamp={message.time}
+                    font={message.font}
+                  />
+                </div>
+              ))}
             </div>
 
             {/* Bottom */}
