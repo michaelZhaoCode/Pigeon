@@ -108,12 +108,15 @@ def create_chatroom():
 @cross_origin()
 def choose_chatroom():
     chatroom_id = request.get_json()['chatroom_id']
-    output = sql_functions.get_messages(chatroom_id)
+    print(chatroom_id)
+    output = sql_functions.get_messages(int(chatroom_id))
 
     for message in output:
         binary_font = message['font']
         encoded_font = b64encode(binary_font).decode("utf-8")
         message['font'] = encoded_font
+
+    print(output)
 
     return jsonify({"output": output})
 
