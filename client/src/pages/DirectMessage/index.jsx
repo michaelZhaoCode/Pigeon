@@ -6,10 +6,11 @@ import ChatMessage from "components/ChatMessage";
 import Dropdown from "components/DropDown";
 import { Button, Img, Input, Line, List, Text, Choose } from "components";
 
-const DirectMessagePage = () => {
+const DirectMessagePage = ({ chatroomId }) => {
   const { showProfile, profileRef } = useProfileVisibility();
   const [messageInput, setMessageInput] = useState("");
   const [styleIndex, setStyleIndex] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const dropdownItems = [
     "Medieval",
@@ -25,10 +26,6 @@ const DirectMessagePage = () => {
   const handleSelection = (index) => {
     setStyleIndex(index.toString());
   };
-
-  const [chatroomId, setChatroomId] =
-    useState(/* some default or passed value */);
-  const [messages, setMessages] = useState([]);
 
   const fetchMessages = async () => {
     try {
