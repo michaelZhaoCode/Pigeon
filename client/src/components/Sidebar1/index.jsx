@@ -52,7 +52,7 @@ const Sidebar1 = (props) => {
             color="white_A700_33"
             size="lg"
             variant="outline"
-            onClick={() => navigate("")}
+            onClick={() => navigate("/")}
           >
             <Img
               className="h-[18px]"

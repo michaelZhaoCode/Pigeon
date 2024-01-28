@@ -3,12 +3,51 @@ import { Button, Img, Input, List, Text } from "components";
 
 const MyProfilePage = React.forwardRef(({ isVisible }, ref) => {
   const [editMode, setEditMode] = useState(false);
-  const [aboutText, setAboutText] = useState(
-    "Travel, Adventure & Lifestyle\nPhotographer & Digital Influencer\nNikon Ambassador\nLet's Work:\ned.ford@mail.com"
-  );
+  const [aboutText, setAboutText] = useState("");
+  const username = "your_username";
 
   const textAreaRef = useRef(null);
 
+  const fetchProfile = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/view_profile/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAboutText(data.bio);
+      } else {
+        console.error("Failed to fetch profile");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
+
+//   const updateBio = async () => {
+//     try {
+//       const response = await fetch("http://127.0.0.1:5000/edit_bio/", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ username, text: aboutText }),
+//       });
+
+//       if (!response.ok) {
+//         console.error("Failed to update bio");
+//       }
+//     } catch (error) {
+//       console.error("Error updating bio:", error);
+//     }
+//   };
+
+//   const handleButtonClick = () => {
+//     if (editMode) {
+//       setEditMode(false);
+//       updateBio();
+  
   const handleButtonClick = async () => {
     if (editMode) {
       setEditMode(false);
@@ -38,7 +77,6 @@ const MyProfilePage = React.forwardRef(({ isVisible }, ref) => {
         // Handle errors in sending request or server-side issues
         console.error("Error while updating profile:", error);
       }
-
     } else {
       setEditMode(true);
     }
