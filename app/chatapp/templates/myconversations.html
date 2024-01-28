@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <h1>{{name}}'s Conversations</h1>
+    </head>
+    <body>
+        <ul>
+            {% for person in conversations %}
+                <li><a href="{{ url_for('main.chat', user=person) }}">{{ person }}</a></li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
