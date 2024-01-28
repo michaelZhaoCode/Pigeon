@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Text } from "components";
 
-const ChatMessage = ({ senderName, messagePreview, timestamp }) => {
+const ChatMessage = ({ senderName, messagePreview, timestamp, font }) => {
   const navigate = useNavigate();
   const lineStyle = {
     textDecoration: "1px underline dashed #dcdcdc",
