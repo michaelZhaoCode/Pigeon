@@ -4,7 +4,7 @@ from base64 import b64encode
 from createFont import finalCreateFont
 
 import sql_functions
-from cohereapi.main import paraphrase, analyze
+from cohereapi.cohere import paraphrase, analyze
 from dalle import generate_image
 
 
@@ -86,7 +86,7 @@ def view_chatrooms():
 @app.route('/create_chatroom/', methods=['POST'])
 @cross_origin()
 def create_chatroom():
-    usernames = request.get_json()['usernames']
+    usernames = [x.strip() for x in request.get_json()['usernames'].split(",")]  # clean values
     chatroom_name = request.get_json()['chatroom_name']
     sql_functions.add_chatroom(usernames, chatroom_name)
 
@@ -137,6 +137,7 @@ def edit_bio():
     sql_functions.change_bio(username, text)
 
     return 200
+
 
 @app.route('/create_font', methods=['POST'])
 @cross_origin()
