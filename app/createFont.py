@@ -32,7 +32,8 @@ def setup():
     with open("details.csv", "w") as file:
         file.write("")
 
-driver = webdriver.Firefox()
+    global driver
+    driver = webdriver.Firefox()
 
 
 def login():
