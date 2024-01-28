@@ -1,12 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
 import Sidebar1 from "components/Sidebar1";
 import PostCard from "components/PostCard";
 import MyProfilePage from "pages/MyProfile";
-// import { Button, Img, Input, List, Text } from "components";
+import CreatePostCard from "components/CreatePostCard";
+import { Button, Img, Input, List, Text } from "components";
 
 const HomePage = () => {
   const { showProfile, profileRef } = useProfileVisibility();
+  const [postcards, setPostcards] = useState([]);
+  const [isCreatePostCardVisible, setCreatePostCardVisible] = useState(false);
+
+  const toggleCreatePostCardVisible = () => {
+    setCreatePostCardVisible(!isCreatePostCardVisible);
+  };
+
+  useEffect(() => {
+    const fetchPostcards = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/view_postcards/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: "yourUsername" }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setPostcards(data.output);
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+
+    fetchPostcards();
+  }, []);
 
   return (
     <>
@@ -16,10 +46,34 @@ const HomePage = () => {
           <div className="flex flex-col gap-5 items-center justify-center w-[50%]">
             <PostCard imageUrl={"./images/img_5.png"}></PostCard>
             <PostCard imageUrl={"./images/pigeon.png"}></PostCard>
+            {postcards.map((postcard, index) => (
+              <PostCard
+                key={index}
+                sender={postcard.sender}
+                recipient={postcard.recipient}
+                content={postcard.text}
+                imageUrl={postcard.image_link}
+                time={postcard.time}
+              />
+            ))}
           </div>
         </div>
+        <Button
+          className="flex h-12 items-center justify-center m-6 w-12"
+          shape="round"
+          color="green_400"
+          size="md"
+          variant="fill"
+          onClick={toggleCreatePostCardVisible}
+        >
+          <Img className="h-6" src="images/img_mail.svg" alt="mail" />
+        </Button>
       </div>
       <MyProfilePage ref={profileRef} isVisible={showProfile} />
+      <CreatePostCard
+        isVisible={isCreatePostCardVisible}
+        onClose={toggleCreatePostCardVisible}
+      ></CreatePostCard>
     </>
   );
 };

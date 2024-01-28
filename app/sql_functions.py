@@ -34,10 +34,11 @@ def create_user_table():
     Username: str
     Bio: str
     Font: BLOB
+    Postcard_style: str
     """
     with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
         cursor = conn.cursor()
-        command = f"CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, username nvarchar(100) UNIQUE, bio TEXT, font BLOB)"
+        command = f"CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, username nvarchar(100) UNIQUE, bio TEXT, font BLOB, postcard_style TEXT)"
         cursor.execute(command)
         conn.commit()
 
@@ -98,13 +99,29 @@ def create_postcards_table():
         conn.commit()
 
 
+# TODO: load message history based on good generations
+# Then augment prompts with examples and also secondary model to generate rules/patterns
+def create_generations_table():
+    """Schema
+    id: int (not used)
+    Username: str
+    Input: str
+    Output: str
+    """
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        command = f"CREATE TABLE IF NOT EXISTS generations (id INTEGER PRIMARY KEY AUTOINCREMENT, username nvarchar(100), input TEXT, output TEXT)"
+        cursor.execute(command)
+        conn.commit()
+
+
 def add_user(username: str, font_filepath: str):
     with open(font_filepath, 'rb') as file:
         font_data = file.read()
 
     with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
         cursor = conn.cursor()
-        cursor.execute("""INSERT INTO users (username, bio, font) VALUES (?, ?, ?)""", (username, "Nice to meet you!", font_data))
+        cursor.execute("""INSERT INTO users (username, bio, font, postcard_style) VALUES (?, ?, ?, ?)""", (username, "Nice to meet you!", font_data, ""))
         conn.commit()
 
 
@@ -232,6 +249,54 @@ def change_bio(username: str, new_bio: str):
         cursor = conn.cursor()
         cursor.execute("""UPDATE users SET bio = ? WHERE username = ?""",
                        (new_bio, username))
+
+
+def change_postcard_style(username: str, new_style: str):
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""UPDATE users SET postcard_style = ? WHERE username = ?""",
+                       (new_style, username))
+
+
+def get_postcard_style(username: str) -> str:
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""SELECT postcard_style FROM users WHERE username = ?""",
+                       (username,))
+        result = cursor.fetchone()
+
+    return result[0]
+
+
+def add_generation(username: str, input_text: str, output: str):
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""INSERT INTO generations (username, input, output) VALUES (?, ?, ?)""",
+                       (username, input_text, output))
+        conn.commit()
+
+
+def get_generations(username) -> list[dict]:
+    with sqlite3.connect(DATABASE_NAME, check_same_thread=False) as conn:
+        cursor = conn.cursor()
+        query = """
+        SELECT input, output FROM generations WHERE username = ?
+        """
+        cursor.execute(query, (username,))
+        results = cursor.fetchall()
+
+    history = []
+    for result in results:
+        history.append({
+            "role": "USER",
+            "message": result[0]
+        })
+        history.append({
+            "role": "OUTPUT",
+            "message": result[1]
+        })
+
+    return history
 
 
 def view_table(table):
