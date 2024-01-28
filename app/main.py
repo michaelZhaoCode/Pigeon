@@ -7,7 +7,6 @@ import sql_functions
 from app.cohere_functions import paraphrase, analyze
 from dalle import generate_image
 
-
 app = Flask(__name__)
 
 sql_functions.initialize_database()
