@@ -15,6 +15,7 @@ const variants = {
     white_A700_33: "bg-white-A700_33",
     indigo_A200: "bg-indigo-A200 text-white-A700",
     red_A200: "bg-red-A200 text-white-A700",
+    nostalgia: "bg-amber-700 text-white-A700",
   },
   outline: {
     gray_500_6c: "border-2 border-gray-500_6c border-solid text-gray-900",
@@ -44,7 +45,9 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`${className} ${(shape && shapes[shape]) || ""} ${(size && sizes[size]) || ""} ${(variant && variants[variant]?.[color]) || ""}`}
+      className={`${className} ${(shape && shapes[shape]) || ""} ${
+        (size && sizes[size]) || ""
+      } ${(variant && variants[variant]?.[color]) || ""}`}
       {...restProps}
     >
       {!!leftIcon && leftIcon}

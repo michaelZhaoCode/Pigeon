@@ -157,8 +157,8 @@ const MessagesPage = () => {
               </div>
             </div>
           </div>
-          <MyProfilePage isVisible={showProfile}></MyProfilePage>
         </div>
+        <MyProfilePage isVisible={false}></MyProfilePage>
       </div>
     </>
   );

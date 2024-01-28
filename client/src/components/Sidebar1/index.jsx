@@ -79,7 +79,3 @@ const Sidebar1 = (props) => {
 Sidebar1.defaultProps = {};
 
 export default Sidebar1;
-
-{
-  /* <MyProfilePage isVisible={showProfile} /> */
-}

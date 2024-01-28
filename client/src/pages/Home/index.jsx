@@ -1,16 +1,11 @@
-import React, { useContext } from "react";
-
-import { useNavigate } from "react-router-dom";
-import { ProfileContext } from "pages/MyProfile/profileContext";
-
-// import { Button, Img, Input, List, Text } from "components";
+import React from "react";
+import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
 import Sidebar1 from "components/Sidebar1";
 import MyProfilePage from "pages/MyProfile";
+// import { Button, Img, Input, List, Text } from "components";
 
 const HomePage = () => {
-  const navigate = useNavigate();
-
-  const { showProfile } = useContext(ProfileContext);
+  const { showProfile, profileRef } = useProfileVisibility();
 
   return (
     <>
@@ -19,8 +14,8 @@ const HomePage = () => {
         <div className="flex flex-1 flex-col items-center justify-end md:ml-[0] ml-[65px] md:mt-0 mt-10 md:px-5 w-full">
           <div className="flex flex-col gap-10 items-center justify-start w-full"></div>
         </div>
-        <MyProfilePage isVisible={showProfile}></MyProfilePage>
       </div>
+      <MyProfilePage ref={profileRef} isVisible={showProfile} />
     </>
   );
 };
