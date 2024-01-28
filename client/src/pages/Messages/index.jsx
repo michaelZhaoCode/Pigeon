@@ -7,15 +7,21 @@ import { useProfileVisibility } from "pages/MyProfile/userProfileVisibility";
 import Sidebar1 from "components/Sidebar1";
 import MyProfilePage from "pages/MyProfile";
 import { CloseSVG } from "../../assets/images";
+import DirectMessagePage from "pages/DirectMessage";
 
 const MessagesPage = () => {
   const navigate = useNavigate();
   const { showProfile, profileRef } = useProfileVisibility();
   const { roomMembers, setRoomMembers } = useState([]);
   const [isCreateChatVisible, setCreateChatVisible] = useState(false);
+  const [showDirectMessage, setShowDirectMessage] = useState(false);
 
   const toggleCreateChatVisible = () => {
     setCreateChatVisible(!isCreateChatVisible);
+  };
+
+  const handleChatSelect = () => {
+    setShowDirectMessage(!showDirectMessage);
   };
   return (
     <>
@@ -57,46 +63,52 @@ const MessagesPage = () => {
                   senderName=""
                   mesasgePreview=""
                   timeStamp=""
+                  onClick={handleChatSelect}
                 ></ChooseChat>
                 <ChooseChat
                   senderName=""
                   mesasgePreview=""
                   timeStamp=""
+                  onClick={handleChatSelect}
                 ></ChooseChat>
                 <ChooseChat
                   senderName=""
                   mesasgePreview=""
                   timeStamp=""
+                  onClick={handleChatSelect}
                 ></ChooseChat>
               </List>
             </div>
           </div>
           {/* Right Side */}
           <div className="flex md:flex-1 md:flex-col flex-row items-center justify-between md:px-5 w-[65%] md:w-full">
-            <div className="flex flex-col gap-5 items-center justify-start w-full">
-              <div className="bg-gray-100 h-40 md:h-[75px] p-[41px] md:px-10 sm:px-5 relative rounded-[50px] w-40">
-                <Img
-                  className="absolute h-[75px] inset-[0] justify-center m-auto w-[49%]"
-                  src="images/img_mail_75X78.svg"
-                  alt="mail One"
-                />
+            {!showDirectMessage && (
+              <div className="flex flex-col gap-5 items-center justify-start w-full">
+                <div className="bg-gray-100 h-40 md:h-[75px] p-[41px] md:px-10 sm:px-5 relative rounded-[50px] w-40">
+                  <Img
+                    className="absolute h-[75px] inset-[0] justify-center m-auto w-[49%]"
+                    src="images/img_mail_75X78.svg"
+                    alt="mail One"
+                  />
+                </div>
+                <div className="flex flex-col gap-3.5 items-center justify-start w-full">
+                  <Text
+                    className="text-3xl sm:text-[26px] md:text-[28px] text-gray-500"
+                    size="txtInterBold30Gray500"
+                  >
+                    {/* TODO: Can add user custom font */}
+                    <>Pigeons&#39; Mail Delivery</>
+                  </Text>
+                  <Text
+                    className="text-gray-500 text-sm"
+                    size="txtInterMedium14Gray500"
+                  >
+                    Pick a friend and send a mail
+                  </Text>
+                </div>
               </div>
-              <div className="flex flex-col gap-3.5 items-center justify-start w-full">
-                <Text
-                  className="text-3xl sm:text-[26px] md:text-[28px] text-gray-500"
-                  size="txtInterBold30Gray500"
-                >
-                  {/* TODO: Can add user custom font */}
-                  <>Pigeons&#39; Mail Delivery</>
-                </Text>
-                <Text
-                  className="text-gray-500 text-sm"
-                  size="txtInterMedium14Gray500"
-                >
-                  Pick a friend and send a mail
-                </Text>
-              </div>
-            </div>
+            )}
+            {showDirectMessage && <DirectMessagePage />}
           </div>
         </div>
       </div>
