@@ -4,9 +4,12 @@
     </head>
     <body>
         <ul>
-            {% for person in conversations %}
-                <li><a href="{{ url_for('main.chat', user=person) }}">{{ person }}</a></li>
+            {% for chatroom in chatrooms %}
+                <li><a href="{{ url_for('main.chat', active_chatroom=chatroom['chatroom_id']) }}">{{ chatroom['chatroom_name'] }}</a></li>
             {% endfor %}
         </ul>
+        <br><br>
+        <!-- start a new conversation -->
+        <a href="{{ url_for('main.new_conversation') }}">Start a new conversation</a>
     </body>
 </html>

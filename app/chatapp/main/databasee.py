@@ -1,31 +1,23 @@
+import sys
+sys.path.append("../..")
 
-def getMichaelPeople():
-    return ["John", "Jane"]
+import app.sqll as sqll
 
-def getConversation(person1, person2):
-    return [{
-          "from": person1,
-          "message": "Hello"
-        },
-        {
-          "from": person2,
-          "message": "Hi"
-        },
-        {
-          "from": person1,
-          "message": "How are you?"
-        },
-        {
-          "from": person2,
-          "message": "I'm fine, and you?"
-        },
-        {
-          "from": person1,
-          "message": "I'm fine too"
-        }
-    ]
+def setupTestDatabase():
+    sqll.initialize_database()
+    sqll.add_chatroom(["Michael", "John"], "MichaelandJohn")
 
-def saveConversation(person1, person2, conversation):
-    print("Saving conversation between " + person1 + " and " + person2)
-    print(conversation)
+def getChatrooms(user):
+    chatrooms = sqll.get_chatrooms(user)
+    return chatrooms
+
+def getConversation(chatroom_id):
+    messages = []
+    for message in sqll.get_messages(chatroom_id):
+        messages.append({"from": message["username"], "message": message["text"]})
+    return messages
+
+def saveMessage(username, chatroom_id, text):
+    print("Saving message from " + username + " in chatroom " + str(chatroom_id) + ": " + text)
+    sqll.add_message(username, text, chatroom_id)
     return None

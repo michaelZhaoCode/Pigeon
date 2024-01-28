@@ -1,8 +1,7 @@
 from flask import session
 from flask_socketio import emit, join_room, leave_room
 import sys
-
-from main.databasee import saveConversation
+from main.databasee import saveMessage
 sys.path.append("..") # Adds higher directory to python modules path.
 from chatapp import socketio
 
@@ -20,10 +19,11 @@ def joined(message):
 def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
+    active_chatroom = session.get('active_chatroom')
+    username = session.get('name')
+    text = message['msg']
+    saveMessage(username, active_chatroom, text)
     room = session.get('room')
-
-    saveConversation(session.get('name'), session.get('chattingWith'), message['msg'])
-
     emit('message', {'msg': session.get('name') + ': ' + message['msg']}, room=room)
 
 

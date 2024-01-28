@@ -8,3 +8,8 @@ class LoginForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     room = StringField('Room', validators=[DataRequired()])
     submit = SubmitField('Enter Chatroom')
+
+class NewConversation(FlaskForm):
+    """Accepts a username to start a new conversation with"""
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Start Conversation')
