@@ -11,17 +11,21 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchPostcards = async () => {
-      const response = await fetch("http://localhost:5000/view_postcards/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: "yourUsername" }),
-      });
+      try {
+        const response = await fetch("http://localhost:5000/view_postcards/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: "yourUsername" }),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setPostcards(data.output);
+        if (response.ok) {
+          const data = await response.json();
+          setPostcards(data.output);
+        }
+      } catch {
+        console.error("Error:", error);
       }
     };
 
