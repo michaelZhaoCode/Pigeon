@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <h1>{{name}}'s Conversations</h1>
+    </head>
+    <body>
+        <ul>
+            {% for chatroom in chatrooms %}
+                <li><a href="{{ url_for('main.chat', active_chatroom=chatroom['chatroom_id']) }}">{{ chatroom['chatroom_name'] }}</a></li>
+            {% endfor %}
+        </ul>
+        <br><br>
+        <!-- start a new conversation -->
+        <a href="{{ url_for('main.new_conversation') }}">Start a new conversation</a>
+    </body>
+</html>
