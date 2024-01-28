@@ -20,15 +20,22 @@ const MessagesPage = () => {
   useEffect(() => {
     const fetchChatrooms = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/view_chatrooms/",
-          {
-            username: "YourUsername", // Replace with actual username
-          }
-        );
-        setChatrooms(response.data.output);
+        const response = await fetch("http://localhost:5000/view_chatrooms/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: "YourUsername" }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setChatrooms(data.output);
       } catch (error) {
-        console.log("Error fetching chatrooms:", error);
+        console.error("Error fetching chatrooms:", error);
       }
     };
 
