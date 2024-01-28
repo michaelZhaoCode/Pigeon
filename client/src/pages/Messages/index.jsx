@@ -25,7 +25,7 @@ const MessagesPage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: "YourUsername" }),
+          body: JSON.stringify({ username: "Michael" }),
         });
 
         if (!response.ok) {
