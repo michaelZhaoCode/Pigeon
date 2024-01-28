@@ -23,7 +23,7 @@ const HomePage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: "yourUsername" }),
+          body: JSON.stringify({ username: "Michael" }),
         });
 
         if (response.ok) {

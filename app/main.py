@@ -10,9 +10,16 @@ from dalle import generate_image
 
 app = Flask(__name__)
 
+sql_functions.initialize_database()
+
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+
+
+@app.route('/')
+def index():
+    return "hello"
 
 
 @app.route('/register/', methods=['POST'])
@@ -28,7 +35,7 @@ def register():
     finalCreateFont()
     sql_functions.add_user(username, font_filepath=f"{username}.ttf")
 
-    return 200
+    return jsonify({'status': 'success'}), 200
 
 
 @app.route('/view_postcards/', methods=['POST'])
@@ -38,11 +45,11 @@ def view_postcards():
     output = sql_functions.get_postcards(username)
     generations = sql_functions.get_generations(username)
 
-    if len(generations) > 1:
-        instructions = analyze(generations)
-        sql_functions.change_postcard_style(instructions)
+    # if len(generations) > 1:
+    #     instructions = analyze(generations)
+    #     sql_functions.change_postcard_style(instructions)
 
-    return jsonify({"output": output})
+    return jsonify({"output": output}), 200
 
 
 @app.route('/send_postcard/', methods=['POST'])
@@ -50,14 +57,19 @@ def view_postcards():
 def send_postcard():
     sender = request.get_json()['sender']
     receiver = request.get_json()['receiver']
+    style = request.get_json()['style']
     text = request.get_json()['text']
-    image_link = generate_image(text)
+    # image_link = generate_image(text)
+    image_link = ""
 
-    sql_functions.add_generation(sender, "Give me a good example of postcard text", text)
+    if style != "":
+        text = paraphrase(text, style, [], "Don't go too long beyond the original message")
+
+    # sql_functions.add_generation(sender, "Give me a good example of postcard text", text)
 
     sql_functions.add_postcard(sender, receiver, text, image_link)
 
-    return 200
+    return jsonify({'status': 'success'}), 200
 
 
 @app.route('/rewrite_postcard/', methods=['POST'])
@@ -90,7 +102,7 @@ def create_chatroom():
     chatroom_name = request.get_json()['chatroom_name']
     sql_functions.add_chatroom(usernames, chatroom_name)
 
-    return 200
+    return jsonify({'status': 'success'}), 200
 
 
 @app.route('/choose_chatroom/', methods=['POST'])
@@ -112,11 +124,15 @@ def choose_chatroom():
 def send_chat():
     username = request.get_json()['username']
     chatroom_id = request.get_json()['chatroom_id']
+    style = request.get_json()['style']
     text = request.get_json()['text']
+
+    if style != "":
+        text = paraphrase(text, style, [], "Don't go too long beyond the original message")
 
     sql_functions.add_message(username, text, chatroom_id)
 
-    return 200
+    return jsonify({'status': 'success'}), 200
 
 
 @app.route('/view_profile/', methods=['POST'])
@@ -136,7 +152,7 @@ def edit_bio():
 
     sql_functions.change_bio(username, text)
 
-    return 200
+    return jsonify({'status': 'success'}), 200
 
 
 @app.route('/create_font', methods=['POST'])
@@ -152,7 +168,7 @@ def create_font():
         file.write(username + ",")
         file.write(font_path + "")
     finalCreateFont()
-    return 200
+    return jsonify({'status': 'success'}), 200
 
 
 if __name__ == "__main__":

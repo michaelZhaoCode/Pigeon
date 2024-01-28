@@ -33,7 +33,7 @@ const CreatePostCard = ({ isVisible, onClose }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sender,
+        sender: sender,
         receiver: recipient,
         text: content,
       }),

@@ -27,26 +27,56 @@ const MyProfilePage = React.forwardRef(({ isVisible }, ref) => {
     }
   };
 
-  const updateBio = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:5000/edit_bio/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, text: aboutText }),
-      });
+//   const updateBio = async () => {
+//     try {
+//       const response = await fetch("http://127.0.0.1:5000/edit_bio/", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ username, text: aboutText }),
+//       });
 
-      if (!response.ok) {
-        console.error("Failed to update bio");
-      }
-    } catch (error) {
-      console.error("Error updating bio:", error);
-    }
-  };
+//       if (!response.ok) {
+//         console.error("Failed to update bio");
+//       }
+//     } catch (error) {
+//       console.error("Error updating bio:", error);
+//     }
+//   };
 
-  const handleButtonClick = () => {
+//   const handleButtonClick = () => {
+//     if (editMode) {
+//       setEditMode(false);
+//       updateBio();
+  
+  const handleButtonClick = async () => {
     if (editMode) {
       setEditMode(false);
-      updateBio();
+
+      // API call to save the updated aboutText
+      try {
+        const response = await fetch('http://127.0.0.1:5000/edit_bio', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Include authorization or other headers if needed
+          },
+          body: JSON.stringify({
+            text: aboutText,
+            // Include other user profile data if necessary
+          }),
+        });
+
+        if (response.ok) {
+          // Handle successful response
+          console.log("Profile updated successfully");
+        } else {
+          // Handle non-successful response
+          console.error("Failed to update profile");
+        }
+      } catch (error) {
+        // Handle errors in sending request or server-side issues
+        console.error("Error while updating profile:", error);
+      }
     } else {
       setEditMode(true);
     }
